@@ -23,9 +23,17 @@ total_orders = 0
 for order_id, data in orders.items():
     # Нормализуем ключи
     date = data.get('date') or data.get('дата')
+    if not date:
+        continue
 
-    # Оставляем только июль 2023
-    if not date or not date.startswith('2023-07'):
+    # Разбираем дату в формате ГГГГ-ДД-ММ
+    parts = date.split('-')
+    if len(parts) != 3:
+        continue
+    year, day, month = parts
+
+    # Оставляем только июль 2023 года
+    if year != '2023' or month != '07':
         continue
 
     user_id = data.get('user_id') or data.get('идентификатор_пользователя')
@@ -51,7 +59,7 @@ for order_id, data in orders.items():
         max_quantity_val = quantity
         max_quantity_order = order_id
 
-    # Статистика по дням
+    # Статистика по дням (используем исходную дату как ключ)
     day_stats[date] = day_stats.get(date, 0) + 1
 
     # Статистика по пользователям
