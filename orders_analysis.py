@@ -26,7 +26,7 @@ for order_id, data in orders.items():
     if not date:
         continue
 
-    # Разбираем дату в формате ГГГГ-ДД-ММ
+    # Разбираем дату в формате ГГГГ-ДД-ММ (как в файле!)
     parts = date.split('-')
     if len(parts) != 3:
         continue
@@ -40,7 +40,6 @@ for order_id, data in orders.items():
     quantity = data.get('quantity') or data.get('количество')
     price = data.get('price') or data.get('цена')
 
-    # Проверяем наличие данных
     if None in (user_id, quantity, price):
         continue
 
@@ -59,7 +58,7 @@ for order_id, data in orders.items():
         max_quantity_val = quantity
         max_quantity_order = order_id
 
-    # Статистика по дням (используем исходную дату как ключ)
+    # Статистика по дням
     day_stats[date] = day_stats.get(date, 0) + 1
 
     # Статистика по пользователям
